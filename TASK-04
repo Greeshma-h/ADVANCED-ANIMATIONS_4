@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void startTracking();
+void stopTracking(clock_t start_time);
+
+int main() {
+    int choice;
+
+    while (1) {
+        printf("\nTime Tracking Program\n");
+        printf("1. Start Tracking\n");
+        printf("2. Stop Tracking\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                startTracking();
+                break;
+            case 2:
+                printf("You need to start tracking first!\n");
+                break;
+            case 3:
+                printf("Exiting the program. Goodbye!\n");
+                exit(0);
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+
+    return 0;
+}
+
+void startTracking() {
+    clock_t start_time = clock();
+    char stop;
+    printf("Timer started. Press 'q' to stop tracking.\n");
+
+    while (1) {
+        stop = getchar(); // to catch the enter key
+        stop = getchar(); // to catch the actual character
+        if (stop == 'q' || stop == 'Q') {
+            stopTracking(start_time);
+            break;
+        }
+    }
+}
+
+void stopTracking(clock_t start_time) {
+    clock_t end_time = clock();
+    double elapsed_time = ((double) (end_time - start_time)) / CLOCKS_PER_SEC;
+
+    printf("Timer stopped.\n");
+    printf("Elapsed time: %.2f seconds.\n", elapsed_time);
+}
